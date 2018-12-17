@@ -29,6 +29,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Connected to Ethereum client version: " + web3j.web3ClientVersion().send().getWeb3ClientVersion());
+        log.info(String.format("Connected to Ethereum client version: %s", web3j.web3ClientVersion().send().getWeb3ClientVersion()));
     }
 }

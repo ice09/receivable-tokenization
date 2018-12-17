@@ -1,16 +1,14 @@
 package de.ice09.invoice.verifier.services;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Input {
 
     public static Map<String, String> parse(String arg) throws IOException {
         Map<String, String> ard = new HashMap<>();
+        //Content from file as alternative
         //String content = Files.lines(new File("src/main/resources/ard.csv").toPath()).collect(Collectors.joining()).replaceAll("\"", "");
         String[] contents = arg.replaceAll("\"", "").split(",");
         ard.put("id", contents[0]);

@@ -2,7 +2,9 @@ package de.ice09.invoice.verifier.services;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.web3j.crypto.*;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.Hash;
+import org.web3j.crypto.Sign;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
@@ -16,7 +18,7 @@ public class SignatureService {
     public SignatureService() {
         String privateKey1 = "c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3";
         credentials = Credentials.create(privateKey1);
-        log.info("Address: " + credentials.getAddress());
+        log.info(String.format("Address derived from public key: %s", credentials.getAddress()));
     }
 
     public String sign(String id, String buyer, String seller, String duedate, BigInteger total) throws Exception {
@@ -54,7 +56,7 @@ public class SignatureService {
                                 Numeric.toHexStringNoPrefix(Hash.sha3(duedate.getBytes())) +
                                 Numeric.toHexStringNoPrefix(Numeric.toBytesPadded(total, 32)))
                         )))));
-        log.info("proof plain:" + proofStr);
+        log.info(String.format("proof plain:%s", proofStr));
         return proofStr;
     }
 

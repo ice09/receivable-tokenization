@@ -8,7 +8,6 @@ import org.web3j.crypto.Sign;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class VerifierService {
 
@@ -19,10 +18,13 @@ public class VerifierService {
         BigInteger res;
         for (int i=0; i<4; i++) {
             res = Sign.recoverFromSignature(i, esig, proof);
-            String addr = Keys.getAddress(res).toLowerCase();
-            if ((res != null) && addr.equals(expectedAddress.substring(2).toLowerCase())) {
-                log.info("public Ethereum address: 0x" + Keys.getAddress(res));
-                return Keys.getAddress(res);
+            if (res != null) {
+                String addr = Keys.getAddress(res).toLowerCase();
+                if (expectedAddress.substring(2).toLowerCase().equals(addr)) {
+                    log.info("Ecrecovered Ethereum address: 0x" + addr);
+                    return addr;
+                }
+
             }
         }
         return null;

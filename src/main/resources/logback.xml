@@ -8,9 +8,10 @@
     </appender>
 
     <!-- Change to DEBUG log protocol messages -->
-    <logger name="org.web3j.protocol" level="INFO"/>
+    <logger name="de.ice09" level="INFO"/>
 
-    <root level="DEBUG">
+    <root level="ERROR">
         <appender-ref ref="STDOUT" />
     </root>
+
 </configuration>

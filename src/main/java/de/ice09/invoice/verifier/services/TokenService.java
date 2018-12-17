@@ -19,6 +19,7 @@ public class TokenService {
     public Erc20Dto deployErc20(Web3j web3j, Credentials credentials, BigInteger total) throws Exception {
         Erc20Token erc20 = Erc20Token.deploy(web3j, credentials, ManagedTransaction.GAS_PRICE, Contract.GAS_LIMIT).send();
         erc20.mint(credentials.getAddress(), total).send();
+        log.info(String.format("Balance of deployed ERC-20 Token: %s", erc20.balanceOf(credentials.getAddress()).send()));
         return new Erc20Dto(erc20.getContractAddress(), erc20.totalSupply().send());
     }
 
@@ -26,9 +27,7 @@ public class TokenService {
         Token erc721 = Token.deploy(web3j, credentials, ManagedTransaction.GAS_PRICE, Contract.GAS_LIMIT, new BigInteger("1000000000000000000")).send();
         log.info(erc721.mint(credentials.getAddress(), BigInteger.ONE).send().toString());
         erc721.setTokenURI(BigInteger.ONE, hash.toBase58()).send();
-        log.info("exists?" + erc721.balanceOf(credentials.getAddress()).send());
-        log.info(erc721.totalSupply().send().toString());
-        log.info("uri:" + erc721.tokenURI(BigInteger.ONE).send());
+        log.info(String.format("Stored IPFS-URI in ERC-721 NFT: %s", erc721.tokenURI(BigInteger.ONE).send()));
         return erc721.getContractAddress();
     }
 
